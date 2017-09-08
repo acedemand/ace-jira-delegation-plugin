@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.acedemand.plugins.jira</groupId>
+    <artifactId>ace-jira-delegation-plugin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+	
+	
+	<organization>
+        <name>Acedemand</name>
+        <url>http://www.acedemand.com/</url>
+    </organization>
+	
+	
+	<name>Acedemand JIRA Delegation Plugin</name>
+    <description>This is the com.acedemand.plugins.jira:ace-jira-user-delegation-plugin plugin for Atlassian JIRA.</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-api</artifactId>
+            <version>${jira.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-core</artifactId>
+            <version>${jira.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.templaterenderer</groupId>
+            <artifactId>atlassian-template-renderer-api</artifactId>
+            <version>1.3.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-plugin</artifactId>
+            <version>${ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-jira-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <productVersion>${jira.version}</productVersion>
+                    <productDataVersion>${jira.version}</productDataVersion>
+                    <allowGoogleTracking>false</allowGoogleTracking>
+                    <!--productDataPath>${basedir}/src/test/resources/generated-test-resources.zip</productDataPath-->
+                    <pluginArtifacts>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.activeobjects</groupId>
+                            <artifactId>activeobjects-plugin</artifactId>
+                            <version>${ao.version}</version>
+                        </pluginArtifact>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.activeobjects</groupId>
+                            <artifactId>activeobjects-jira-spi</artifactId>
+                            <version>${ao.version}</version>
+                        </pluginArtifact>
+                    </pluginArtifacts>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <jira.version>6.4.4</jira.version>
+        <ao.version>0.23.12</ao.version>
+        <amps.version>5.0.13</amps.version>
+        <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
+        <!-- TestKit version 5.x for JIRA 5.x, 6.x for JIRA 6.x -->
+        <testkit.version>5.2.26</testkit.version>
+    </properties>
+</project>

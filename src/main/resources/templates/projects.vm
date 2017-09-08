@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Delegation Admin</title>
+    <meta name="decorator" content="atl.admin">
+</head>
+<body>
+<form id="admin" class="aui" method="post">
+    <div class="field-group">
+        <label for="projectKey">Project :</label>
+        <input type="text" id="projectKey" name="projectKey" class="text">
+    </div>
+
+
+    <div class="field-group">
+        <label for="firstDelegation">Birinci Delege:</label>
+        <input type="text" id="firstDelegation" name="firstDelegation" class="text">
+    </div>
+
+    <div class="field-group">
+        <label for="secondDelegation">İkinci Delege :</label>
+        <input type="text" id="secondDelegation" name="secondDelegation" class="text">
+    </div>
+
+
+    <div class="field-group">
+        <input type="submit" value="Kaydet" class="button">
+    </div>
+</form>
+
+    <table class="aui">
+        <thead>
+        <tr>
+            <th id="username">Project</th>
+            <th id="startDate">Birinci Delege</th>
+            <th id="endDate">Ikinci Delege</th>
+        </tr>
+        </thead>
+    <tbody>
+        #foreach ( $userHierarchy in $userHierarchyCollection )
+        <tr>
+            <td>$userHierarchy.projectKey</td>
+            <td>$userHierarchy.firstDelegation</td>
+            <td>$userHierarchy.secondDelegation</td>
+            <td><a href="ProjectDelegation!delete.jspa?project=$userHierarchy.projectKey" >Sil</a></td>
+        </tr>
+        </tbody>
+        #end
+    </table>
+
+
+</body>
+</html>

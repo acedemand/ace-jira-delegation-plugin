@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Delegation Admin</title>
+    <meta name="decorator" content="atl.admin">
+</head>
+<body>
+<form id="admin" class="aui" method="post">
+    <div class="field-group">
+        <label for="username">Kullanici:</label>
+        <input type="text" id="username" name="username" class="text">
+    </div>
+    <div class="field-group">
+        <label for="startDate">Baslangic</label>
+        <input type="date" id="startDate" name="startDate" class="date-picker">
+    </div>
+    <div class="field-group">
+        <label for="endDate">Bitis</label>
+        <input type="date" id="endDate" name="endDate" class="date-picker">
+
+    </div>
+    <div class="field-group">
+        <input type="submit" value="Kaydet" class="button">
+    </div>
+
+</form>
+
+    <table class="aui">
+        <thead>
+            <tr>
+                <th id="username">User</th>
+                <th id="startDate">Start Date</th>
+                <th id="endDate">End Date</th>
+                <th id="delete">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        #foreach ( $holiday in $holidayCollection )
+            <tr>
+                <td>$holiday.userName</td>
+                <td>$dateFormatter.format($holiday.startDate)</td>
+                <td>$dateFormatter.format($holiday.endDate)</td>
+                <td><a href="HolidayDelegation!delete.jspa?username=$holiday.userName">Delete</a></td>
+            </tr>
+        </tbody>
+        #end
+    </table>
+
+</body>
+</html>

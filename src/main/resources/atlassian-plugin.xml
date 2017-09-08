@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="ace-user-delegation"/>
+
+
+    <web-resource key="ace-user-delegation-resources" name="ace-user-delegation Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+
+        <resource type="download" name="ace-user-delegation.css" location="/css/ace-user-delegation.css"/>
+        <resource type="download" name="ace-user-delegation.js" location="/js/ace-user-delegation.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>ace-delegation-api</context>
+    </web-resource>
+
+    <workflow-function key="assign-issue-post-function" name="Assign to User Post Function"
+                       i18n-name-key="assign-issue-post-function.name"
+                       class="com.atlassian.jira.plugin.workflow.WorkflowNoInputPluginFactory">
+        <description key="assign-issue-post-function.description">The Delegation Issue Post Function Plugin
+        </description>
+        <function-class>com.acedemand.plugin.jira.workflow.DelegateUserPostFunction</function-class>
+        <resource type="velocity" name="view" location="templates/assign-issue-post-function.vm"/>
+    </workflow-function>
+
+    <ao key="ao-module">
+        <description>The module configuring the Active Objects service used by this plugin</description>
+        <entity>com.acedemand.plugin.jira.api.UserHierarchy</entity>
+        <entity>com.acedemand.plugin.jira.api.UserHoliday</entity>
+    </ao>
+
+    <component-import key="ao" name="Active Objects service"
+                      interface="com.atlassian.activeobjects.external.ActiveObjects">
+        <description>Component to access Active Objects functionality from the plugin</description>
+    </component-import>
+
+    <component-import key="user-manager" name="SAL User Manager" interface="com.atlassian.sal.api.user.UserManager">
+        <description>The SAL user manager</description>
+    </component-import>
+
+    <component key="userHierarchyDao" name="UserHierarchyDao Service"  class="com.acedemand.plugin.jira.dao.UserHierarchyDao"/>
+    <component key="userHolidayDao" name="UserHolidayDao Service" class="com.acedemand.plugin.jira.dao.UserHolidayDao"/>
+    <component key="assigneeService" name="Assignee Service"  class="com.acedemand.plugin.jira.services.AssigneeService"/>
+
+
+    <web-section key="delegation_section" location="system.admin.top.navigation.bar" weight="10">
+        <label>Delegasyon</label>
+    </web-section>
+
+    <web-section key="child_delegation_section" location="delegation_section" weight="47">
+        <label>Delegasyon</label>
+    </web-section>
+
+    <web-item key="delegation_holiday_link" name="HolidayDelegation" section="delegation_section/child_delegation_section">
+        <label>Tatil</label>
+        <link linkId="reports">/secure/admin/HolidayDelegation!default.jspa</link>
+    </web-item>
+
+    <web-item key="delegation_project_link" name="ProjectDelegation" section="delegation_section/child_delegation_section">
+        <label>Project</label>
+        <link linkId="reports">/secure/admin/ProjectDelegation!default.jspa</link>
+    </web-item>
+
+    <webwork1 key="HolidayDelegation" name="Delegation Holiday Action">
+        <description>Main action for Delegation</description>
+        <actions>
+            <action name="com.acedemand.plugin.jira.action.HolidayDelegationAction" alias="HolidayDelegation">
+                <view name="input">/templates/holidays.vm</view>
+                <view name="delete">/templates/holidays.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+
+    <webwork1 key="ProjectDelegation" name="Project Delegation Action">
+        <description>Main action for Delegation of Project</description>
+        <actions>
+            <action name="com.acedemand.plugin.jira.action.ProjectDelegationAction" alias="ProjectDelegation">
+                <view name="input">/templates/projects.vm</view>
+                <view name="delete">/templates/projects.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+
+
+</atlassian-plugin>
